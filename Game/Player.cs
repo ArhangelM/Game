@@ -15,6 +15,7 @@
 
         public void ShowStatistics()
         {
+            Console.WriteLine("\t\t\t*****Статистика*****");
             Console.WriteLine($"Нiкнейм: {Name}");
             Console.WriteLine($"Вік: {Age}");
             Console.WriteLine($"Кiлькість зiграних iгор за сесiю: {NumberWins}");
