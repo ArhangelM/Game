@@ -4,8 +4,8 @@
     {
         public string Name { get; }
         public int Age { get; }
-        public int NumberGames { get; }
-        public int NumberWins { get; }
+        public int NumberGames { get; set; }
+        public int NumberWins { get; set; }
 
         public Player(string name, int age)
         {
@@ -18,7 +18,7 @@
             Console.WriteLine("\t\t\t*****Статистика*****");
             Console.WriteLine($"Нiкнейм: {Name}");
             Console.WriteLine($"Вік: {Age}");
-            Console.WriteLine($"Кiлькість зiграних iгор за сесiю: {NumberWins}");
+            Console.WriteLine($"Кiлькість зiграних iгор за сесiю: {NumberGames}");
             Console.WriteLine($"Кiлькість перемог: {NumberWins}");
         }
     }
