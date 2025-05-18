@@ -17,10 +17,12 @@
             "Ще одна жахлива гра! Нічого нового."
         };
 
+        private const int MIN_AGE = 12;
+
         static void Main(string[] args)
         {          
             try
-            {               
+            {
                 Acquaintance();
 
                 while (true)
@@ -31,7 +33,7 @@
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                ColorWriteLine(ex.Message, ConsoleColor.DarkRed);
             }
         }
 
@@ -41,16 +43,15 @@
             Console.Write("Познайомимось? Я - твій помічник Непереможенко. А як звуть тебе? ");
             string name = Console.ReadLine();
             Console.WriteLine($"Приємно познайомитись, {name}. А скільки тобі років?");
+
             int age;
             while (!int.TryParse(Console.ReadLine(), out age))
-            {
-                Console.WriteLine("Сталась прикра помилка. Перевір правильність введених даних.");
-            }
+                ColorWriteLine("Сталась прикра помилка. Перевір правильність введених даних.", ConsoleColor.DarkRed);
 
-            if (age < 12)
+            if (age < MIN_AGE)
             {
                 throw new Exception("Нажаль, ця гра доступна лише для користувачів старших 12 років. \n" +
-                    $"Чекатиму на тебе через {12 - age} років! До зустрічі!");
+                    $"Чекатиму на тебе через {MIN_AGE - age} років! До зустрічі!");
             }
 
             player = new Player(name, age);
@@ -66,9 +67,7 @@
                       " усміхається удача! (1 - так / 2 - ні)");
 
             while (!int.TryParse(Console.ReadLine(), out choice) || (choice < 1 || choice > 2))
-            {
-                Console.WriteLine("Сталась прикра помилка. Перевір правильність введених даних.");
-            }
+                ColorWriteLine("Сталась прикра помилка. Перевір правильність введених даних.", ConsoleColor.DarkRed);
 
             if (choice == 2)
                 throw new Exception($"Шкода! Набирайся сміливості та повертайся в гру, {player.Name}");
@@ -92,8 +91,8 @@
                 Console.WriteLine("Обери вид зброї (1 - камінь | 2 - ножиці | 3 - папір)");
 
                 while (!int.TryParse(Console.ReadLine(), out playerStep) || !Enum.IsDefined(typeof(StepType), playerStep))
-                    Console.WriteLine("Уважно читай інструкції, інакше не буде навіть шансу на перемогу!" +
-                        " Обери вид зброї (1 - камінь | 2 - ножиці | 3 - папір)");
+                    ColorWriteLine("Уважно читай інструкції, інакше не буде навіть шансу на перемогу!" +
+                        " Обери вид зброї (1 - камінь | 2 - ножиці | 3 - папір)", ConsoleColor.DarkRed);
 
                 StepType pcStep = PCStep();
                 Condition resultRound = PlayRound((StepType)playerStep, pcStep);
@@ -153,11 +152,11 @@
             switch (resultRound)
             {
                 case Condition.Win:
-                    Console.WriteLine("Цей раунд за тобою! Так тримати!");
+                    ColorWriteLine("Цей раунд за тобою! Так тримати!", ConsoleColor.Green);
                     playerWins++;
                     break;
                 case Condition.Lose:
-                    Console.WriteLine("Цього раунду ти потерпів невдачу! Але не переймайся, це трапиться ще не один раз");
+                    ColorWriteLine("Цього раунду ти потерпів невдачу! Але не переймайся, це трапиться ще не один раз", ConsoleColor.DarkRed);
                     pcWins++;
                     break;
                 case Condition.Draw:
@@ -175,12 +174,12 @@
                 player.NumberWins++;
 
                 int index = random.Next(quotesForPraise.Length);
-                Console.WriteLine(quotesForPraise[index]);
+                ColorWriteLine(quotesForPraise[index], ConsoleColor.Green);
             }
             else
             {
                 int index = random.Next(quotesForRaiseMorale.Length);
-                Console.WriteLine(quotesForRaiseMorale[index]);
+                ColorWriteLine(quotesForRaiseMorale[index], ConsoleColor.DarkRed);
             }
         }
 
@@ -188,6 +187,13 @@
         {
             Console.WriteLine("\t\t\t Поточний рахунок");
             Console.WriteLine($"Гравець {playerWins} - {pcWins} Комп'ютер");
+        }
+
+        private static void ColorWriteLine(string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(text);
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
