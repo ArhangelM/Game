@@ -5,16 +5,16 @@
         private static Player player;
         private static string[] quotesForPraise =
         {
-            "Неймовірно! Ця перемога була надзвичайно важливою!",
+            "Неймовiрно! Ця перемога була надзвичайно важливою!",
             "Неперевершено! Запам'ятай цю мить, навряд чи це повториться.",
-            "Ти зробив це! Але лише тому, що я допоміг тобі"
+            "Ти зробив це! Але лише тому, що я допомiг тобi"
         };
 
         private static string[] quotesForRaiseMorale =
         {
-            "Я й не сумнівався в твоєму програші!",
+            "Я й не сумнiвався в твоєму програшi!",
             "Ти завжди збираєшся програвати?",
-            "Ще одна жахлива гра! Нічого нового."
+            "Ще одна жахлива гра! Нiчого нового."
         };
 
         private const int MIN_AGE = 12;
@@ -39,19 +39,19 @@
 
         private static void Acquaintance()
         {
-            Console.WriteLine("Вітаю в ексклюзивній грі \"Хрестики нолики\"");
-            Console.Write("Познайомимось? Я - твій помічник Непереможенко. А як звуть тебе? ");
+            Console.WriteLine("Вiтаю в ексклюзивнiй грi \"Хрестики нолики\"");
+            Console.Write("Познайомимось? Я - твiй помiчник Непереможенко. А як звуть тебе? ");
             string name = Console.ReadLine();
-            Console.WriteLine($"Приємно познайомитись, {name}. А скільки тобі років?");
+            Console.WriteLine($"Приємно познайомитись, {name}. А скiльки тобi рокiв?");
 
             int age;
             while (!int.TryParse(Console.ReadLine(), out age))
-                ColorWriteLine("Сталась прикра помилка. Перевір правильність введених даних.", ConsoleColor.DarkRed);
+                ColorWriteLine("Сталась прикра помилка. Перевiр правильнiсть введених даних.", ConsoleColor.DarkRed);
 
             if (age < MIN_AGE)
             {
-                throw new Exception("Нажаль, ця гра доступна лише для користувачів старших 12 років. \n" +
-                    $"Чекатиму на тебе через {MIN_AGE - age} років! До зустрічі!");
+                throw new Exception("Нажаль, ця гра доступна лише для користувачiв старших 12 рокiв. \n" +
+                    $"Чекатиму на тебе через {MIN_AGE - age} рокiв! До зустрiчi!");
             }
 
             player = new Player(name, age);
@@ -63,14 +63,14 @@
             int choice = 0;
 
             player.ShowStatistics();
-            Console.WriteLine("Чи готовий ти зіграти? Чи готовий до поразки? Лише найвідважнішим та найсміливішим" +
-                      " усміхається удача! (1 - так / 2 - ні)");
+            Console.WriteLine("Чи готовий ти зiграти? Чи готовий до поразки? Лише найвiдважнiшим та найсмiливiшим" +
+                      " усмiхається удача! (1 - так / 2 - нi)");
 
             while (!int.TryParse(Console.ReadLine(), out choice) || (choice < 1 || choice > 2))
-                ColorWriteLine("Сталась прикра помилка. Перевір правильність введених даних.", ConsoleColor.DarkRed);
+                ColorWriteLine("Сталась прикра помилка. Перевiр правильнiсть введених даних.", ConsoleColor.DarkRed);
 
             if (choice == 2)
-                throw new Exception($"Шкода! Набирайся сміливості та повертайся в гру, {player.Name}");
+                throw new Exception($"Шкода! Набирайся смiливостi та повертайся в гру, {player.Name}");
 
             Console.Clear();
             Console.WriteLine("Гра розпочинається!");
@@ -88,15 +88,16 @@
             {
                 ShowScore(playerWins, pcWins);
 
-                Console.WriteLine("Обери вид зброї (1 - камінь | 2 - ножиці | 3 - папір)");
+                Console.WriteLine("Обери вид зброї (1 - камiнь | 2 - ножицi | 3 - папiр)");
 
                 while (!int.TryParse(Console.ReadLine(), out playerStep) || !Enum.IsDefined(typeof(StepType), playerStep))
-                    ColorWriteLine("Уважно читай інструкції, інакше не буде навіть шансу на перемогу!" +
-                        " Обери вид зброї (1 - камінь | 2 - ножиці | 3 - папір)", ConsoleColor.DarkRed);
+                    ColorWriteLine("Уважно читай iнструкцiї, iнакше не буде навiть шансу на перемогу!" +
+                        " Обери вид зброї (1 - камiнь | 2 - ножицi | 3 - папiр)", ConsoleColor.DarkRed);
 
                 StepType pcStep = PCStep();
                 Condition resultRound = PlayRound((StepType)playerStep, pcStep);
 
+                UIManager.VisualizationRound((StepType)playerStep, pcStep);
                 CheckRoundResult(resultRound, ref playerWins, ref pcWins);
             }
 
@@ -156,7 +157,7 @@
                     playerWins++;
                     break;
                 case Condition.Lose:
-                    ColorWriteLine("Цього раунду ти потерпів невдачу! Але не переймайся, це трапиться ще не один раз", ConsoleColor.DarkRed);
+                    ColorWriteLine("Цього раунду ти потерпiв невдачу! Але не переймайся, це трапиться ще не один раз", ConsoleColor.DarkRed);
                     pcWins++;
                     break;
                 case Condition.Draw:
