@@ -17,9 +17,9 @@
         {
             Console.WriteLine("\t\t\t*****Статистика*****");
             Console.WriteLine($"Нiкнейм: {Name}");
-            Console.WriteLine($"Вік: {Age}");
-            Console.WriteLine($"Кiлькість зiграних iгор за сесiю: {NumberGames}");
-            Console.WriteLine($"Кiлькість перемог: {NumberWins}");
+            Console.WriteLine($"Вiк: {Age}");
+            Console.WriteLine($"Кiлькiсть зiграних iгор за сесiю: {NumberGames}");
+            Console.WriteLine($"Кiлькiсть перемог: {NumberWins}");
         }
     }
 }
